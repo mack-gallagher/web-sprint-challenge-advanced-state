@@ -6,7 +6,7 @@ import {
          MOVE_COUNTERCLOCKWISE
        } from './action-types';
 
-const initialWheelState = [null,null,"B",null,null,null];
+const initialWheelState = ["B",null,null,null,null,null];
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
     case MOVE_CLOCKWISE:
