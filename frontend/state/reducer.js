@@ -3,7 +3,9 @@ import { combineReducers } from 'redux'
 
 import {
          MOVE_CLOCKWISE,
-         MOVE_COUNTERCLOCKWISE
+         MOVE_COUNTERCLOCKWISE,
+         SET_QUIZ_INTO_STATE,
+         SET_SELECTED_ANSWER
        } from './action-types';
 
 const initialWheelState = ["B",null,null,null,null,null];
@@ -39,9 +41,56 @@ function wheel(state = initialWheelState, action) {
   }
 }
 
-const initialQuizState = null
+const initialQuizState = {
+  current_quiz_loaded: false,
+  quiz_id: "",
+  question: "",
+  answers: [
+             {
+               answer_id: "",
+               text: "",
+               selected: false,
+             },
+             {
+               answer_id: "", 
+               text: "",
+               selected: false,
+             },
+           ],
+} 
 function quiz(state = initialQuizState, action) {
-  return state
+  switch (action.type) {
+    case SET_QUIZ_INTO_STATE:
+      return {
+               current_quiz_loaded: true,
+               ...action.payload,
+               answers: [
+                          { 
+                            ...action.payload.answers[0],
+                            selected: false,
+                          },
+                          {
+                            ...action.payload.answers[1],
+                            selected: false,
+                          }
+                        ]
+             };
+    case SET_SELECTED_ANSWER:
+      const newAnswers = state.answers.map((x,idx) => {
+        if (idx===action.payload) {
+          x.selected = true;
+        } else {
+          x.selected = false;
+        }
+        return x;
+      })
+      return { 
+               ...state,
+               answers: newAnswers,
+             }
+    default:
+      return state;
+  }
 }
 
 const initialSelectedAnswerState = null
@@ -64,3 +113,5 @@ function form(state = initialFormState, action) {
 }
 
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
+
+export { initialQuizState };
