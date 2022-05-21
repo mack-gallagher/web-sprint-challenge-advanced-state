@@ -12,10 +12,8 @@ export function Form(props) {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    console.log('value 1: ',evt.target['0'].value);
-    console.log('value 2: '+evt.target['1'].value);
-    console.log('value 3: '+evt.target['2'].value);
-    postQuiz(evt.target['0'].value,evt.target['1'].value,evt.target['2'].value);
+    console.log(evt);
+    postQuiz(evt.target.elements.newQuestion.value,evt.target.elements.newTrueAnswer.value,evt.target.elements.newFalseAnswer.value);
   }
 
   return (
