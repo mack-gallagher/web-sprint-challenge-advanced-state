@@ -6,7 +6,9 @@ import {
          MOVE_COUNTERCLOCKWISE,
          SET_QUIZ_INTO_STATE,
          SET_SELECTED_ANSWER,
-         SET_INFO_MESSAGE
+         SET_INFO_MESSAGE,
+         INPUT_CHANGE,
+         RESET_FORM, 
        } from './action-types';
 
 const initialWheelState = ["B",null,null,null,null,null];
@@ -115,7 +117,21 @@ const initialFormState = {
   newFalseAnswer: '',
 }
 function form(state = initialFormState, action) {
-  return state
+  switch (action.type) {
+    case INPUT_CHANGE:
+      return {
+               ...state,
+               [action.payload.name]: action.payload.value,
+             }
+    case RESET_FORM:
+      return {
+               newQuestion: '',
+               newTrueAnswer: '',
+               newFalseAnswer: '',
+             }
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
