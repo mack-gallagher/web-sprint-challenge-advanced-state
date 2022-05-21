@@ -10,6 +10,8 @@ import {
          setQuiz,
          selectAnswer,
          fetchQuiz,
+         postAnswer,
+         postQuiz,
        } from '../state/action-creators';
 
 const mapStateToProps = state => {
@@ -61,6 +63,7 @@ function Quiz(props) {
             <button 
               id="submitAnswerBtn"
               disabled={quiz.answers.filter(x => x.selected === true).length===0}
+              onClick={() => dispatch(postAnswer(quiz.quiz_id,quiz.answers.filter(x=>x.selected===true)[0].answer_id))} 
             >
               Submit answer
             </button>
